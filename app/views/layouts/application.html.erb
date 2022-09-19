@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" class="<% if user_signed_in? %><%= current_user.profile.appearance %><% end %>">
+  <%# add class="dark" as HTML attribute for default dark mode #%>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="<%= "#{request.base_url}/apple-touch-icon.png" %>">
+    <link rel="icon" type="image/png" sizes="32x32" href="<%= "#{request.base_url}/favicon-32x32.png" %>">
+    <link rel="icon" type="image/png" sizes="16x16" href="<%= "#{request.base_url}/favicon-16x16.png" %>">
+    <link rel="manifest" href="<%= "#{request.base_url}/site.webmanifest" %>">
+    <link rel="shortcut icon" href="<%= "#{request.base_url}/favicon.ico" %>">
+
+    <meta name="author" content="github.com/duleepdaniel/vinura">
+
+    <title><%= yield(:title) %></title>
+    <%= yield (:content_up) %>
+
+    <meta property="og:image:type" content="image/png"/>
+    <meta property="og:image:width" content="1024"/>
+    <meta property="og:image:height" content="512"/>
+
+    <% if yield(:meta).presence %>
+      <%= yield(:meta) %>
+    <% else %>
+      <meta property="og:image" content="<%= image_url "fav.png" %>"/>
+      <meta property="og:image:secure_url" content="<%= image_url "fav.png" %>"/>
+      <meta property="og:image:alt" content="Vinura: A Blogging Website for creative writers, bloggers and developers"/>
+      <meta name="description"
+            content="Vinura: A Blogging Website for creative writers, bloggers and developers"/>
+      <meta property="article:tag" content="creative writing platform, medium alternative, blogging platform, anynomous posting"/>
+    <% end %>
+
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag "tailwind", "dm-sans", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= render "components/script_tags" %>
+
+    <%= javascript_importmap_tags %>
+    <%= hotwire_livereload_tags if Rails.env.development? %>
+  </head>
+
+  <body class="main-body">
+    <main class="h-full w-full">
+      <% unless params[:controller].include? 'devise/' %>
+        <%=   render "components/errors"   %>
+        <%= render "components/notice" %>
+      <% end %>
+      <%= yield %>
+    </main>
+  </body>
+  <%= yield (:content_down) %>
+</html>

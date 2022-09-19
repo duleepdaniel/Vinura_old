@@ -1,0 +1,50 @@
+<%= content_for(:title, "#{@post.title}") %>
+
+<%= content_for :meta do %>
+  <% render "posts/meta" %>
+<% end %>
+
+<%= render "components/aside_bar/aside_bar" do %>
+  <div id="<%= dom_id @post %>" class="w-full py-7 md:py-10">
+    <%= render "posts/post-profile", post: @post %>
+    <div class="min-h-screen">
+      <div class="content-box min-h-screen smart-padding py-7">
+        <div class="space-y-1 space-x-2">
+          <%= render @post.tags %>
+        </div>
+        <h1 class="break-words"><%= @post.title %></h1>
+        <div class="break-words">
+          <%= @post.body.html_safe %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <%= content_for :right_aside_bar do %>
+    <%= render "profile/profile", profile: @post.user.profile %>
+    <div class="px-7 flex flex-col gap-5">
+      <h2 class="power-nav-heading">Some related posts</h2>
+      <%= render "global/post_titles", posts: @post.similiar_posts.limit(7) %>
+    </div>
+  <% end %>
+
+  <%= content_for :down_bar_up_kit do %>
+    <div class="post-reaction-box" >
+      <%= render "likes/create", likeable: @post %>
+      <%= render "comments/btn", comments: @comments %>
+      <% if can? :update, @post %>
+        <%= render "components/edit_btn", edit_path: edit_post_path(@post.id) %>
+      <% end %>
+      <% if can? :destroy, @post %>
+        <%= render "components/delete_btn", delete_path: post_path(@post.id) %>
+      <% end %>
+    </div>
+  <% end %>
+
+  <%= content_for :below_block do %>
+    <%= render "comments/box", { commentable: @post, comments: @comments } %>
+  <% end %>
+
+<% end %>
+

@@ -1,0 +1,20 @@
+
+default: &default
+  adapter: postgresql
+  username: 'dpanthagani'
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  timeout: 5000
+
+development:
+  <<: *default
+  database: db/vinura_dev
+
+test:
+  <<: *default
+  database: db/vinura_test
+
+production:
+  <<: *default
+  database: vinura_production
+  username: vinura_db_username
+  password: vinura_db_password

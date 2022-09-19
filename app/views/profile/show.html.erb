@@ -1,0 +1,3 @@
+<%= render "profile/layout" do %>
+  <%= render (@profile.user.quick_tweets + @profile.user.posts).slice(0, 14).shuffle %>
+<% end %>

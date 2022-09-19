@@ -1,0 +1,30 @@
+<%= content_for(:title, "#{@quick_tweet.title}") %>
+
+<%= content_for :meta do %>
+  <% render "quick_tweets/meta" %>
+<% end %>
+
+<%= render "components/aside_bar/aside_bar" do %>
+  <div class="mt-20 min-h-screen">
+    <%= turbo_stream_from @quick_tweet, class: "hidden" %>
+    <%= render "tweet_cert", quick_tweet: @quick_tweet %>
+  </div>
+
+  <%= content_for :down_bar_up_kit do %>
+    <div class="post-reaction-box">
+      <%= render "likes/create", likeable: @quick_tweet %>
+      <%= render "comments/btn", comments: @comments %>
+
+      <% if can? :update, @quick_tweet %>
+        <%= render "components/edit_btn", edit_path: edit_quick_tweet_path %>
+      <% end %>
+      <% if can? :destroy, @quick_tweet %>
+        <%= render "components/delete_btn", delete_path: quick_tweet_path %>
+      <% end %>
+    </div>
+  <% end %>
+
+  <%= content_for :below_block do %>
+    <%= render "comments/box", { commentable: @quick_tweet, comments: @comments } %>
+  <% end %>
+<% end %>

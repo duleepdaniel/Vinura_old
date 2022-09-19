@@ -1,0 +1,29 @@
+<%= turbo_frame_tag comment, class: "" do %>
+  <div class="w-full h-auto group overflow-x-scroll cute-scroll">
+    <div class="w-full flex flex-col gap-2 px-3 py-2">
+      <div class="flex gap-x-2">
+        <%= image_tag "fav.png", class: "w-7 h-7 my-auto rounded-full object-cover bg-rose-50"%>
+        <div class="flex flex-col">
+          <span class="my-auto font-light text-sm">
+            <%= comment.user.username %>
+          </span>
+          <span class="sweet-info" title="<%= comment.created_at.to_fs %>">
+            <%= time_ago_in_words(comment.created_at) %>
+          </span>
+        </div>
+      </div>
+      <p>
+        <%= clean_links sanitize(comment.body, tags: %w(strong em a b code), attributes: %w(href)) %>
+      </p>
+    </div>
+  </div>
+<% end %>
+
+
+<%= turbo_stream.replace "comments_count_top" do %>
+  <%= turbo_frame_tag "comments_count_top" do %>
+    <span class="text-2xl font-bold">
+      Comments(<%= comment.commentable.comments.count %>)
+    </span>
+  <% end %>
+<% end %>

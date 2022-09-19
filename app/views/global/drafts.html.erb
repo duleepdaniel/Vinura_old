@@ -1,0 +1,19 @@
+
+<%= content_for(:title, "Vinura") %>
+
+<%= render "components/aside_bar/aside_bar" do %>
+  <main id="all_posts" class="posts-father">
+    <%= render "components/tab_menus", path: new_quick_tweet_path, text: "Add a new quick tweet" %>
+    <div class="posts-seperator" id="all-posts">
+      <%= render "draft/draft", drafts: @drafts %>
+    </div>
+
+    <%= render "components/credits_footer" %>
+  </main>
+
+  <%= content_for :right_aside_bar do %>
+    <%= render "components/latest_posts_and_comment" %>
+  <% end %>
+
+
+<% end %>

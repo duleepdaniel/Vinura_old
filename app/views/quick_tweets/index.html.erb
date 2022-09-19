@@ -1,0 +1,24 @@
+<%= content_for(:title, "Quick Tweets") %>
+
+<%= render "components/aside_bar/aside_bar" do %>
+  <main id="all_quick_tweets" class="posts-father">
+    <%= render "components/tab_menus", path: new_quick_tweet_path, text: "Add a new quick tweet" %>
+
+    <div id="quick_tweets" class="posts-seperator">
+      <%= turbo_stream_from :quick_tweets %>
+      <%= render @quick_tweets %>
+    </div>
+    <% if @pagy.next %>
+      <div class="flex justify-center mb-12">
+        <div id="load-more-btn" class="w-full">
+          <%= button_to "Load More", pagy_index_quick_tweets_path(page: @pagy.next), class:"view-btn w-full dark:hover:bg-black/50" %>
+        </div>
+      </div>
+    <% end %>
+  </main>
+
+
+  <%= content_for :right_aside_bar do %>
+    <%= render "components/latest_posts_and_comment" %>
+  <% end %>
+<% end %>

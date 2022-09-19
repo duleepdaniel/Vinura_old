@@ -1,0 +1,39 @@
+<% if can? :destroy, draftable %>
+  <%= turbo_frame_tag "#{draftable.model_name.name}-#{draftable.id}_draft", class: "inline-block" do %>
+    <div class="hidden relative" id="more-draftable-info-bar">
+      <div class="absolute bottom-3 right-0 w-32">
+        <% draft = current_user.drafts.find_by(draftable: draftable) %>
+        <% if draft.nil? %>
+          <%= button_to drafts_path,
+                        params: {
+                          draft: {
+                            draftable_id: draftable.id,
+                            draftable_type: draftable.model_name.name
+                          }
+                        },
+                        class: "view-btn rounded-0 w-full dark:text-white" do %>
+            <%= icon "fa-solid", "save", class: "my-0.5 float-left" %> Draft
+          <% end %>
+        <% else %>
+          <%= button_to draft_path(draft), method: :delete,
+                        params: {
+                          draft: {
+                            draftable_id: draftable.id,
+                            draftable_type: draftable.model_name.name
+                          }
+                        },
+                        class: "view-btn rounded-0 w-full dark:text-white" do %>
+            <%= icon "fa-solid", "save", class: "my-0.5 float-left" %> Undraft
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+    <button
+      class=""
+      data-controller="togglebar"
+      data-togglebar-body-param="more-draftable-info-bar"
+      data-action='togglebar#toggleNavDrop'>
+      <%= icon "fa-solid", "ellipsis", class: "icon-share" %>
+    </button>
+  <% end %>
+<% end %>

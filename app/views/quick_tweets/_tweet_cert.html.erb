@@ -1,0 +1,18 @@
+<%= render "posts/post-profile", post: quick_tweet %>
+
+<div id="<%= dom_id quick_tweet %>_target" class="col-span-2 smart-padding">
+  <div class="ml-2 mb-6">
+    <div class="block mb-2 text-right">
+      <span class="sweet-info px-2 py-1 rounded bg-blue-100/20 m-1" title="<%= quick_tweet.created_at.to_fs %>">
+        <%= time_ago_in_words(quick_tweet.created_at) %>
+      </span>
+      <span class="sweet-info px-2 py-1 rounded bg-blue-100/20 m-1" title="<%= quick_tweet.created_at.to_fs %>">
+        <%= quick_tweet.watches %> Views
+      </span>
+    </div>
+  </div>
+  <div class="content-box">
+    <%= purify quick_tweet.body %>
+  </div>
+</div>
+

@@ -1,0 +1,18 @@
+<!-- component -->
+<div class="flex justify-center">
+  <div class="relative inline-block">
+    <!-- Dropdown toggle button -->
+    <%= button_to "", class: "menu-drop-down", data: {
+      controller: 'togglebar',
+      action: 'togglebar#toggleNavDrop',
+      togglebar_body_param: "nav-bar-body"
+    } do %>
+      <span class="mx-1"><%= current_user.username %></span>
+      <%= icon "fa", "chevron-down", class: "text-sm w-5 h-5 mx-1" %>
+    <% end %>
+    <!-- Dropdown menu -->
+    <div id="nav-bar-body" class="hidden duration-200 absolute right-0 z-20 w-56 py-2 mt-2 overflow-hidden bg-white rounded-md shadow-xl dark:bg-gray-800">
+      <%= render "components/aside_bar/aside_bar_popmenu_links" %>
+    </div>
+  </div>
+</div>

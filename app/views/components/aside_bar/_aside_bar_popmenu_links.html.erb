@@ -1,0 +1,42 @@
+<a href="#" class="flex items-center p-3 -mt-2 text-sm text-gray-600 transition-colors duration-200 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
+  <%= image_tag current_user.profile.my_avatar, class: "flex-shrink-0 object-cover mx-1 rounded-full w-9 h-9" %>
+  <div class="mx-1">
+    <h1 class="text-sm font-semibold text-gray-700 dark:text-gray-200"><%= current_user.username %></h1>
+    <p class="text-sm text-gray-500 dark:text-gray-400 truncate w-min"><%= current_user.email %></p>
+  </div>
+</a>
+
+<% if yield(:right_aside_bar).presence %>
+  <button class="block md:hidden toogle-bar-item text-left w-full border-gray-200 dark:border-gray-700 border-t"
+          data-controller="togglebar"
+          data-togglebar-body-param="right_aside_bar"
+          data-action='togglebar#toggleNavDrop'>
+    <%= icon "fas", "bars" %>
+    <span>Toggle Power Nav</span>
+  </button>
+  <button type="button"
+          class="toogle-bar-item text-left w-full"
+          data-controller="togglebar"
+          data-action="togglebar#toggleNavDrop"
+          data-togglebar-body-param="search-section">
+    <%= icon "fas", "search" %>
+    <span>Search</span>
+  </button>
+<% end %>
+
+<%= render "components/aside_bar/appearance_toggle" %>
+
+<%= link_to profile_index_path, class: "toogle-bar-item border-gray-200 dark:border-gray-700 border-t" do %>
+  <%= icon "fas", "user-ninja" %>
+  <span>View Profile</span>
+<% end %>
+<%= link_to edit_user_registration_path, class: "toogle-bar-item" do %>
+  <%= icon "fas", "cog" %>
+  <span>Settings</span>
+<% end %>
+<hr class="border-gray-200 dark:border-gray-700 ">
+<%= button_to destroy_user_session_path, method: :delete,
+              class: "toogle-bar-item w-full text-left" do %>
+  <%= icon "fas", "sign-out" %>
+  <span>Sign Out</span>
+<% end %>

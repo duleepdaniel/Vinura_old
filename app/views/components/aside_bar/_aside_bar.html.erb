@@ -1,0 +1,56 @@
+<div class="flex flex-row w-full">
+  <%# LEFT CONTENT %>
+  <div class="w-full flex flex-col md:flex-row-reverse min-w-0">
+    <div class="w-full min-w-0">
+      <%= yield %>
+      <div class="sticky bottom-20 duration-200 md:bottom-7  shrink-0">
+        <% if yield(:down_bar_up_kit).presence %>
+          <%# Commenting and react stuff here #%>
+          <div class="place-items-center grid mb-7 ">
+            <%= yield (:down_bar_up_kit) %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <aside class="side-bar">
+      <nav class="h-full md:h-screen navigational-items flex flex-row  md:flex-col">
+        <div class="side-bar-top-item">
+          <%= link_to root_path do %>
+            <%= image_tag "fav.png", class: "platform-icon"%>
+          <% end %>
+        </div>
+        <div class="side-bar-middle-item">
+          <%= render "components/aside_bar/aside_bar_links" %>
+        </div>
+        <%= render "components/aside_bar/aside_bar_logger" %>
+      </nav>
+    </aside>
+  </div>
+
+  <%# RIGHT CONTENT %>
+  <% if yield(:right_aside_bar).presence %>
+    <div class="hidden lg:block power-nav" id="right_aside_bar">
+      <div class="mt-4">
+        <div class="lg:hidden flex justify-end pr-4">
+          <%= button_tag '',
+                         class: "super-rounded-btn self-center",
+                         data: { controller: "togglebar",
+                                 togglebar_body_param: "right_aside_bar",
+                                 action: "togglebar#toggleNavDrop" } do %>
+            <%= icon 'fa-solid', 'times', class: "" %>
+          <% end %>
+        </div>
+        <%= render "components/search/search_bar" %>
+      </div>
+      <div class="min-h-screen">
+        <%= yield (:right_aside_bar) %>
+      </div>
+    </div>
+    <%= render "components/search/search_bar_overlay" %>
+  <% end %>
+</div>
+
+<% if yield(:below_block).presence %>
+  <%= yield (:below_block) %>
+<% end %>

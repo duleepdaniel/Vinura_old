@@ -1,0 +1,402 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@layer components {
+    h1 {
+        @apply block;
+    }
+    .tag-block {
+        @apply bg-neutral-100 px-2 py-1 m-1 rounded-lg text-neutral-700 inline-block;
+        @apply dark:bg-neutral-900 dark:text-neutral-100;
+    }
+    .tag-block.active{
+        @apply bg-neutral-200 text-neutral-800;
+        @apply dark:bg-neutral-800 dark:text-neutral-50;
+    }
+    .main-body {
+        @apply dark:bg-slate-900;
+        @apply dark:text-slate-50;
+    }
+    .posts-father {
+        @apply h-auto min-h-screen block md:mt-10;
+        @apply smart-padding;
+    }
+    .posts-seperator {
+        @apply divide-y dark:divide-slate-700;
+    }
+    .post-box {
+        @apply overflow-hidden;
+        @apply px-6 py-10;
+    }
+    .content-box {
+        @apply break-words;
+    }
+    .excerpt {
+        @apply break-words;
+        @apply text-gray-700 text-2xl text-base;
+        @apply dark:text-gray-100;
+    }
+    .author-info {
+        @apply text-neutral-500 hover:text-blue-800;
+        @apply dark:hover:text-blue-100 dark:text-neutral-50;
+    }
+    .line-bar {
+        @apply flex-row flex gap-5 border-b;
+    }
+    .line-bar .line-tab {
+        @apply px-3 py-2 border-b border-transparent;
+        @apply hover:border-gray-400;
+        @apply dark:hover:border-gray-100;
+    }
+    .line-bar .line-tab.active {
+        @apply  border-b font-bold;
+        @apply border-gray-400;
+        @apply dark:border-gray-100;
+    }
+    .side-bar {
+        @apply sticky left-0 bottom-0 md:top-0 h-16 md:h-screen md:border-r z-30;
+        @apply dark:border-gray-800 bg-gray-900;
+    }
+    .side-bar-top-item {
+        @apply mx-auto px-5 md:py-7 md:w-24;
+        @apply hidden md:block;
+        @apply hover:bg-blue-50;
+        @apply dark:hover:bg-sky-900 dark:bg-slate-700;
+    }
+    .side-bar-middle-item {
+        @apply h-full w-full justify-center flex md:flex-col divide-x;
+        @apply dark:divide-gray-800 dark:border-gray-800 border-r md:border-0;
+    }
+    .side-bar-top-item .platform-icon{
+        @apply sm:w-7 md:w-12 rounded-xl mx-auto my-auto;
+    }
+    .side-bar-bottom-item {
+        @apply mx-auto cursor-pointer flex px-5 justify-center py-7 h-full w-full
+        hover:bg-blue-50 bg-slate-100;
+        @apply dark:hover:bg-sky-900 dark:bg-black/10;
+    }
+    .side-bar-bottom-item.active {
+        @apply hover:bg-blue-100 bg-indigo-100;
+        @apply dark:hover:bg-gray-600 dark:bg-gray-700;
+    }
+    .super-rounded-btn {
+        @apply rounded-full h-7 w-7 grid place-items-center;
+        @apply  hover:bg-yellow-50 bg-slate-50;
+        @apply  dark:hover:bg-yellow-500 dark:bg-slate-500;
+    }
+    .navigational-items {
+        @apply dark:bg-transparent border-t bg-white;
+        @apply h-16 sm:h-20 justify-between grid grid-cols-5;
+        @apply dark:border-t dark:border-slate-800;
+    }
+    .aside-menu-element {
+        @apply items-stretch flex justify-center p-0 md:px-5 md:py-7 w-full;
+        @apply hover:bg-blue-50 text-2xl text-slate-500 hover:text-slate-700;
+        @apply dark:text-slate-100 dark:hover:bg-stone-800/20 dark:hover:text-slate-50;
+    }
+    .aside-menu-element.active {
+        @apply hover:bg-blue-100 bg-indigo-100;
+        @apply dark:hover:bg-gray-700 dark:bg-gray-800;
+    }
+    .toogle-bar-item {
+        @apply block px-4 py-3 text-sm capitalize transition-colors duration-200 transform;
+        @apply space-x-2;
+        @apply text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white;
+    }
+    .posts-tag {
+        @apply px-2 py-1 rounded-lg text-sm text-slate-700 inline-block;
+        @apply dark:text-slate-50 dark:bg-slate-800;
+    }
+    .plus-new-button {
+        @apply group-hover:rotate-180 duration-200 rounded-full;
+        @apply w-9 h-9 grid place-items-center;
+        @apply bg-stone-100 group-hover:bg-stone-200;
+        @apply dark:bg-stone-900 dark:group-hover:bg-stone-700;
+    }
+    .icon-share {
+        @apply rounded-full p-2 text-stone-500;
+        @apply bg-slate-100 hover:bg-slate-200 hover:text-stone-600;
+        @apply dark:bg-slate-700 dark:hover:bg-slate-600 dark:hover:text-stone-50 dark:text-stone-100;
+    }
+    .power-nav {
+        @apply fixed border-l overflow-y-scroll no-scrollbar z-30
+        lg:sticky top-0 max-h-screen min-h-screen h-full w-full md:w-[33rem];
+        @apply bg-neutral-50/90 backdrop-blur;
+        @apply dark:bg-slate-900/90 dark:border-slate-800 dark:divide-slate-800 backdrop-blur;
+    }
+    .power-nav-heading {
+        @apply text-2xl font-extrabold text-neutral-700;
+        @apply dark:text-neutral-100;
+    }
+    .sweet-box {
+        @apply hover:bg-slate-100 rounded-xl p-2;
+        @apply dark:hover:bg-black/20;
+    }
+    .sweet-info {
+        @apply text-sm text-slate-500;
+        @apply dark:text-slate-50;
+    }
+    .profile-box {
+        @apply min-h-screen h-auto min-w-0 block text-sm smart-padding md:pt-28;
+    }
+    .go-to-btn {
+        @apply px-4 py-2 text-lg text-gray-600 hover:text-gray-800;
+        @apply shrink-0;
+        @apply hover:font-bold dark:text-gray-100 dark:hover:text-gray-50;
+    }
+    .go-to-btn.active {
+        @apply rounded-full text-gray-900;
+        @apply bg-slate-100 dark:bg-gray-800 dark:text-gray-50 dark:hover:text-white;
+    }
+    .small-badge {
+        @apply inline-block mx-2 px-2 bg-slate-100 rounded-md p-1;
+        @apply dark:bg-slate-800;
+    }
+    .menu-drop-down {
+        @apply relative z-10 flex items-center p-2 text-sm text-gray-600 border border-slate-200 rounded-md focus:border-blue-500 focus:ring-opacity-40 dark:focus:ring-opacity-40 focus:ring-blue-300
+        dark:focus:ring-blue-400 focus:ring dark:text-white dark:bg-gray-800 focus:outline-none;
+    }
+    .post-reaction-box {
+        @apply rounded-xl z-10  h-10 bg-slate-200 flex text-right w-fit;
+        @apply divide-x divide-blue-200 shadow flex;
+        @apply dark:divide-slate-900 dark:bg-slate-700;
+    }
+    .post-reaction-box .box {
+        @apply px-3 grid place-items-center;
+        @apply last:rounded-r-xl first:rounded-l-xl;
+    }
+    .smart-padding {
+        @apply px-3 sm:px-5 md:px-10 lg:px-16 xl:px-32;
+    }
+    code {
+        @apply font-mono font-medium text-sky-500 dark:text-sky-400;
+    }
+    code:not(pre code) {
+        @apply p-1 rounded bg-slate-200;
+    }
+
+
+    pre {
+        @apply flex bg-slate-700 dark:bg-slate-600;
+        @apply rounded-xl;
+        @apply whitespace-pre-wrap;
+        @apply overflow-hidden;
+        @apply p-3 m-3;
+    }
+
+    pre code {
+        @apply text-lg;
+    }
+
+    .link {
+        @apply text-stone-700;
+        @apply font-bold;
+        @apply hover:text-teal-900;
+
+        @apply dark:text-sky-100;
+        @apply dark:hover:text-sky-50;
+    }
+    .view-btn {
+        @apply p-2 rounded border shadow dark:border-gray-700 dark:shadow-gray-800/40;
+        @apply bg-white hover:bg-gray-200;
+        @apply dark:hover:bg-slate-800 dark:bg-slate-900;
+    }
+    .view-btn[disabled] {
+        @apply bg-gray-200 dark:hover:bg-gray-800 dark:bg-gray-700/10;
+    }
+    .tab-button {
+        @apply text-sm md:text-xl hover:underline cursor-pointer py-2 px-4 rounded-xl;
+        @apply bg-purple-50 dark:bg-neutral-800;
+    }
+    .tab-button.active {
+        @apply bg-slate-50 dark:bg-slate-500 underline;
+    }
+
+    .bg-authentication {
+        @apply grid place-items-center min-h-screen;
+        @apply bg-slate-100 dark:bg-slate-900;
+    }
+    .input-box-2 {
+        @apply border-0 focus:outline-none focus:ring-0 w-full shadow p-3 rounded;
+        @apply dark:bg-slate-700 dark:focus:bg-black dark:text-gray-50 focus:text-black dark:focus:text-white;
+    }
+    .input-box {
+        @apply shadow appearance-none border rounded w-full py-2 px-3 leading-tight;
+        @apply bg-neutral-100/50 focus:bg-white text-gray-700 focus:text-black dark:focus:text-white;
+        @apply dark:bg-neutral-900 dark:focus:bg-black dark:text-gray-50;
+    }
+    .home-btn {
+        @apply duration-100  rounded px-3 py-2 block border mt-7 w-fit;
+        @apply bg-slate-200/50 hover:bg-slate-300/50 text-neutral-600 hover:text-neutral-800;
+        @apply dark:bg-slate-50/10 dark:hover:bg-slate-100/50 dark:text-neutral-50;
+    }
+    .input-label {
+        @apply block text-slate-700 dark:text-slate-100 text-sm font-bold mb-2;
+    }
+
+    .auth-btn {
+        @apply bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded cursor-pointer;
+    }
+
+    .auth-co-btn {
+        @apply font-bold py-2 px-4 rounded hover:underline inline-block cursor-pointer;
+        @apply hover:bg-teal-500/10 text-neutral-900;
+        @apply dark:hover:bg-teal-900/10 dark:text-neutral-50;
+    }
+    .auth-heading {
+        @apply text-2xl md:text-4xl text-slate-600 dark:text-slate-300 font-bold;
+    }
+    .error-box {
+        @apply text-rose-500;
+        @apply font-semibold;
+        @apply text-sm;
+    }
+    .error-box li {
+        @apply rounded-lg;
+        @apply bg-red-50;
+        @apply p-2 my-2;
+    }
+    .main-btn {
+        @apply text-white bg-blue-700 hover:bg-blue-800 focus:ring-4
+        focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5
+        py-2.5 text-center mr-3 md:mr-0 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800;
+    }
+
+    .page-title-heading {
+        @apply font-bold text-slate-600 text-xl md:text-4xl sm:text-2xl mb-4;
+    }
+
+    /* EDITOR CSS */
+    #image-inserter {
+        @apply fixed w-full h-full overflow-scroll z-30 left-0 m-0 fixed top-0 w-full py-7 h-screen;
+        @apply bg-sky-50/90 dark:bg-slate-900/70 backdrop-blur;
+    }
+    #image-inserter .preview-parent {
+        @apply md:px-32 md:py-7 w-full grid place-items-center;
+    }
+    #image-inserter .preview-parent img:not([src]) {
+        @apply hidden;
+    }
+    #image-inserter .uploader-box {
+        @apply rounded w-full max-w-md border-4 border-blue-200 border-dashed;
+        @apply dark:hover:bg-gray-100 dark:hover:bg-gray-900 dark:hover:border-gray-300;
+        @apply hover:bg-blue-100/90 hover:border-black;
+    }
+    .editor-controls {
+        @apply w-full bg-white/50 dark:bg-black/10 p-2;
+        @apply space-y-1 sm:space-y-0 backdrop-blur;
+    }
+    .editor-controls .edit-btn, .editor-button-strech {
+        @apply cursor-pointer duration-100;
+        @apply text-slate-100 font-bold text-lg;
+        @apply dark:text-white dark:hover:bg-slate-500/50 dark:focus:ring-blue-800;
+        @apply bg-slate-900/70 hover:bg-slate-800/70;
+        @apply rounded focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-indigo-900;
+        @apply h-9 text-center;
+    }
+    .editor-controls .edit-btn {
+        @apply w-9;
+    }
+    .editor-controls .edit-btn * {
+        @apply duration-100;
+    }
+    .editor-controls .header-option {
+        @apply block px-4 py-2 text-sm text-gray-200 font-bold capitalize transition-colors
+        duration-200 transform
+        dark:text-gray-300
+        hover:text-white
+        hover:bg-slate-900/50 backdrop-blur
+        dark:hover:bg-gray-700 dark:hover:text-white;
+    }
+
+    .editor-controls .header-select {
+        @apply absolute md:left-0 w-max z-20 mt-2 overflow-hidden
+        bg-purple-700/30 backdrop-blur rounded-md shadow-xl dark:bg-gray-800;
+    }
+
+    /* Editor Content CSS */
+    .ts-control {
+        @apply dark:bg-neutral-600/30;
+    }
+    .edit-title-box {
+        @apply block text-4xl focus:border-l focus:border-slate-700 font-light py-2 border-0
+        bg-white/10 backdrop-blur focus:outline-none focus:ring-0 h-12 px-3 py-2 mt-2 w-full;
+    }
+    .ProseMirror {
+        @apply h-full text-slate-800 focus:outline-none bg-white p-3 w-full;
+        @apply dark:text-slate-100 dark:bg-slate-700;
+    }
+    .tiptap-placeholder {
+        @apply first:before:text-2xl first:before:text-gray-400
+        first:before:h-0
+        first:before:float-left
+        first:before:content-[attr(data-placeholder)]
+        first:before:pointer-events-none;
+    }
+
+    :is(.ProseMirror, .content-box) p a {
+        @apply text-gray-700 underline underline-offset-0;
+    }
+    :is(.ProseMirror, .content-box) p {
+        @apply text-lg sm:text-xl my-2;
+    }
+
+    :is(.ProseMirror, .content-box) ul {
+        @apply list-outside list-disc space-y-2 pl-6;
+    }
+
+    :is(.ProseMirror, .content-box) ol {
+        @apply list-outside list-decimal space-y-2 pl-6;
+    }
+
+    :is(.ProseMirror, .content-box) h1 {
+        @apply pt-4 pb-2 mb-2 text-4xl lg:text-6xl font-bold text-slate-800;
+        @apply dark:text-slate-50;
+    }
+
+    :is(.ProseMirror, .content-box) h2 {
+        @apply pt-3 pb-1 mb-2 text-3xl lg:text-5xl font-semibold text-slate-700;
+        @apply dark:text-slate-100;
+    }
+
+    :is(.ProseMirror, .content-box) h3 {
+        @apply pt-2 pb-1 text-2xl lg:text-4xl font-semibold text-slate-600;
+        @apply dark:text-slate-200;
+    }
+
+    :is(.ProseMirror, .content-box) h4 {
+        @apply pt-1 pb-1 text-xl lg:text-3xl font-bold text-stone-600;
+        @apply dark:text-slate-200;
+    }
+
+    :is(.ProseMirror, .content-box) h5 {
+        @apply pt-1 pb-1 text-lg lg:text-2xl font-semibold text-slate-700;
+        @apply dark:text-slate-200;
+    }
+
+    :is(.ProseMirror, .content-box) h6 {
+        @apply pt-1 pb-1 text-sm lg:text-2xl font-medium text-slate-700;
+        @apply dark:text-slate-300;
+    }
+
+    :is(.ProseMirror, .content-box) blockquote {
+        @apply border-l-4 border-slate-800 py-1 pl-4;
+    }
+
+
+}
+
+@layer utilities {
+
+    /* Chrome, Safari and Opera */
+    .no-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+
+    .no-scrollbar {
+        -ms-overflow-style: none; /* IE and Edge */
+        scrollbar-width: none; /* Firefox */
+    }
+
+}
+

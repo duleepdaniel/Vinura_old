@@ -1,0 +1,16 @@
+public/system/*
+log/*.log
+tmp/*
+
+.sass-cache/
+coverage/
+
+.byebug_history
+
+# Ignore application configuration
+/config/application.yml
+
+.idea/
+.envrc
+
+.DS_Store

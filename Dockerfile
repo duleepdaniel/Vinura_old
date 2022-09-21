@@ -1,18 +1,21 @@
-FROM ruby:2.5.1-alpine as Builder
+FROM ruby:3.0.0-alpine as Builder
 
 RUN apk add --update --no-cache \
     build-base \
     postgresql-dev \
     git \
-    imagemagick \
+    imagemagick imagemagick6-dev imagemagick6-libs \
     nodejs-current \
     yarn \
-    tzdata
+    tzdata \
+    gcompat
 
 WORKDIR /app
 
+ENV BUNDLER_VERSION=2.2.3
+
 # Install gems
-RUN gem install bundler -v 2.0.1
+RUN gem install bundler -v 2.2.3
 
 ADD Gemfile* /app/
 RUN bundle config --global frozen 1 \
@@ -22,14 +25,14 @@ RUN bundle config --global frozen 1 \
  && find /usr/local/bundle/gems/ -name "*.o" -delete
 
 # Install yarn packages
-COPY package.json yarn.lock /app/
+COPY yarn.lock /app/
 RUN yarn install
 
 # Add the Rails app
 ADD . /app
 
 # Precompile assets
-RUN RAILS_ENV=production SECRET_KEY_BASE=foo bundle exec rake assets:precompile
+RUN RAILS_ENV=production SECRET_TOKEN=sampletoken bundle exec rake assets:precompile
 
 # Remove folders not needed in resulting image
 RUN rm -rf node_modules tmp/cache app/assets vendor/assets lib/assets spec
@@ -40,7 +43,7 @@ RUN rm -rf node_modules tmp/cache app/assets vendor/assets lib/assets spec
 
 # ###############################
 # # Stage Final
-FROM ruby:2.5.1-alpine
+FROM ruby:3.0.0-alpine
 LABEL maintainer="mail@duleep.daniel@gmail.com"
 
 # Add Alpine packages
@@ -72,3 +75,6 @@ RUN date -u > BUILD_TIME
 
 # Start up
 ENTRYPOINT ["docker/startup.sh"]
+
+# Start up
+CMD bundle exec puma -C config/puma.rb

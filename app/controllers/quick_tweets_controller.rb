@@ -1,6 +1,6 @@
 class QuickTweetsController < ApplicationController
-  before_action :set_quick_tweet, only: %i[ show edit update destroy ]
-  before_action :authenticate_user!, only: %i[ new edit update create destroy ]
+  before_action :set_quick_tweet, only: %i[show edit update destroy]
+  before_action :authenticate_user!, only: %i[new edit update create destroy]
   authorize_resource
 
   def index
@@ -24,8 +24,7 @@ class QuickTweetsController < ApplicationController
     @quick_tweet = QuickTweet.new
   end
 
-  def edit
-  end
+  def edit; end
 
   def create
     @quick_tweet = QuickTweet.new(quick_tweet_params)
@@ -37,9 +36,10 @@ class QuickTweetsController < ApplicationController
         format.html { redirect_to quick_tweet_url(@quick_tweet) }
         format.json { render :show, status: :created, location: @quick_tweet }
       else
-        format.turbo_stream {
-          render turbo_stream: turbo_stream.replace("error_explanation", partial: 'components/errors', locals: { errors: @quick_tweet.errors })
-        }
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.replace('error_explanation', partial: 'components/errors',
+                                                                         locals: { errors: @quick_tweet.errors })
+        end
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @quick_tweet.errors, status: :unprocessable_entity }
       end
@@ -53,10 +53,11 @@ class QuickTweetsController < ApplicationController
         format.html { redirect_to quick_tweet_url(@quick_tweet) }
         format.json { render :show, status: :ok, location: @quick_tweet }
       else
-        format.turbo_stream {
-          render turbo_stream: turbo_stream.replace("error_explanation", partial: 'components/errors', locals: { errors: @quick_tweet.errors })
-        }
-        format.html { render :edit, status: :unprocessable_entity, alert: "Quick Tweet was not updated." }
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.replace('error_explanation', partial: 'components/errors',
+                                                                         locals: { errors: @quick_tweet.errors })
+        end
+        format.html { render :edit, status: :unprocessable_entity, alert: 'Quick Tweet was not updated.' }
         format.json { render json: @quick_tweet.errors, status: :unprocessable_entity }
       end
     end
@@ -65,12 +66,13 @@ class QuickTweetsController < ApplicationController
   def destroy
     @quick_tweet.destroy
     respond_to do |format|
-      format.html { redirect_to root_path, alert: "Quick Tweet was successfully destroyed." }
+      format.html { redirect_to root_path, alert: 'Quick Tweet was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
 
   private
+
   def set_quick_tweet
     @quick_tweet = QuickTweet.find(params[:id])
   end

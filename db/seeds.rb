@@ -8,9 +8,9 @@
 
 dummy_posts = [
   {
-    title: "Why study in the UK?",
+    title: 'Why study in the UK?',
     # write article about why you should study in the UK
-    tags: [{ name: "study" }, { name: "uk" }, { name: "abroad" }],
+    tags: [{ name: 'study' }, { name: 'uk' }, { name: 'abroad' }],
     body: "You can study in the UK if you are:
     1. A student of a university in the UK or a university in another country.
     2. A student of a university in the UK and a student of a university in another country.
@@ -24,8 +24,8 @@ dummy_posts = [
     10. A student of a university in the UK and a student of a university in another country and a student of a university in the UK and a student of a university in another country and a"
   },
   {
-    title: "Why study in the US?",
-    tags: [{ name: "study" }, { name: "uk" }, { name: "abroad" }],
+    title: 'Why study in the US?',
+    tags: [{ name: 'study' }, { name: 'uk' }, { name: 'abroad' }],
     # write article about why you should study in the US
 
     body: "You can study in the US if you are:
@@ -41,8 +41,8 @@ dummy_posts = [
     10. A student of a university in the US and a student of a university in another country and a student of a university in the US and a student of a university in another country and a student of a university in the US"
   },
   {
-    title: "Why study in the Finland?",
-    tags: [{ name: "study" }, { name: "finland" }, { name: "abroad" }],
+    title: 'Why study in the Finland?',
+    tags: [{ name: 'study' }, { name: 'finland' }, { name: 'abroad' }],
     # write article about why you should study in the Finland
 
     body: "You can study in the Finland if you are:
@@ -56,10 +56,11 @@ dummy_posts = [
     8. A student of a university in the Finland and a student of a university in another country and a student of a university in the Finland and a student of a university in another country and a student of a university in the Finland and a student of a university in another country and a student of a university in the Finland and a student of a university in another country.
     9. A student of a university in the Finland and a student of a university in another country and a student of a university in the Finland and a student of a university in another country and a student of a university in the Finland and a student of a university in another country and a student of a university in the Finland and a student of a university in another country and a student of a university in the Finland.
     10. A student of a university in the Finland and a student of a university in another country and a student of a university in the Finland and a student of a university in another country and a student of a university in the Finland"
-  },
+  }
 ]
 
-user = User.create(email: 'dumzmybuddy22zz@gamil.com', username: 'dumzmybuddy22zz', password: 'password', password_confirmation: 'password')
+user = User.create(email: 'dumzmybuddy22zz@gamil.com', username: 'dumzmybuddy22zz', password: 'password',
+                   password_confirmation: 'password')
 user.skip_confirmation!
 user.save!
 dummy_posts.each do |dummy|

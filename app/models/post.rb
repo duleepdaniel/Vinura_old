@@ -30,12 +30,12 @@ class Post < ApplicationRecord
   scope :unpublished, -> { where.associated(:draft) }
 
   def is_published
-    self.draft.nil?
+    draft.nil?
   end
 
   def publish
     self.draft = nil
-    self.save
+    save
   end
 
   def should_generate_new_friendly_id?
@@ -44,43 +44,39 @@ class Post < ApplicationRecord
 
   default_scope { order(created_at: :desc) }
 
-  after_save_commit -> {
-    if self.body.present? and self.previous_changes.has_key?(:body)
-      self.generate_og_image
-    end
+  after_save_commit lambda {
+    generate_og_image if body.present? and previous_changes.has_key?(:body)
   }
 
   def pure_text
-    Nokogiri::HTML(body).xpath('//text()').map(&:text).join('').
-      strip
+    Nokogiri::HTML(body).xpath('//text()').map(&:text).join('')
+            .strip
   end
 
   def purify
-    self.body = ApplicationController.helpers.purify self.body
+    self.body = ApplicationController.helpers.purify body
   end
 
   def excerpt
-    Nokogiri::HTML(self.body).xpath('//text()').map(&:text).join(' ').truncate(300)
+    Nokogiri::HTML(body).xpath('//text()').map(&:text).join(' ').truncate(300)
   end
 
   def reading_time
     words_per_minute = 150
-    text = Nokogiri::HTML(self.body).at('body').inner_text
+    text = Nokogiri::HTML(body).at('body').inner_text
     (text.scan(/\w+/).length / words_per_minute).to_i
   end
 
   def similiar_posts
-    Post.joins(:tags). # You need to query the Post table
-    where.not(posts: { id: self.id }). # Exclude this post
-    where(tags: { id: self.tags.ids }). # Get similar tags
-    or(Post.where(user: self.user)).
-      group(:id)
+    Post.joins(:tags) # You need to query the Post table
+        .where.not(posts: { id: id }) # Exclude this post
+        .where(tags: { id: tags.ids }) # Get similar tags
+        .or(Post.where(user: user))
+        .group(:id)
   end
 
   def generate_og_image
-    image_file_io, image_name = ApplicationController.helpers.create_og_image(self.title)
-    self.image.attach(io: image_file_io, filename: image_name, content_type: 'image/png')
+    image_file_io, image_name = ApplicationController.helpers.create_og_image(title)
+    image.attach(io: image_file_io, filename: image_name, content_type: 'image/png')
   end
-
 end
-

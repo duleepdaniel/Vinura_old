@@ -1,7 +1,7 @@
 class PostsController < ApplicationController
   before_action :load_post, only: [:show] # required for proper functioning of cancancan
-  before_action :set_post, only: %i[ edit update destroy ]
-  before_action :authenticate_user!, except: [:index, :show]
+  before_action :set_post, only: %i[edit update destroy]
+  before_action :authenticate_user!, except: %i[index show]
   authorize_resource
 
   def index
@@ -24,23 +24,23 @@ class PostsController < ApplicationController
     @post = Post.new(user: current_user)
   end
 
-  def edit
-  end
+  def edit; end
 
   def create
     @post = Post.new(post_params.except(:tags))
-    create_or_delete_post_tags(@post, params[:post][:tags],)
+    create_or_delete_post_tags(@post, params[:post][:tags])
     @post.user = current_user
     respond_to do |format|
       if @post.save
         format.html { redirect_to post_url(@post) }
         format.json { render :show, status: :created, location: @post }
       else
-        format.turbo_stream {
+        format.turbo_stream do
           render turbo_stream: turbo_stream.replace(
-            "error_explanation", partial: 'components/errors',
-            locals: { errors: @post.errors })
-        }
+            'error_explanation', partial: 'components/errors',
+                                 locals: { errors: @post.errors }
+          )
+        end
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @post.errors, status: :unprocessable_entity }
       end
@@ -48,29 +48,29 @@ class PostsController < ApplicationController
   end
 
   def update
-    create_or_delete_post_tags(@post, params[:post][:tags],)
+    create_or_delete_post_tags(@post, params[:post][:tags])
     respond_to do |format|
       if @post.update(post_params.except(:tags))
-        format.html { redirect_to post_url(@post), notice: "Post was successfully updated." }
+        format.html { redirect_to post_url(@post), notice: 'Post was successfully updated.' }
         format.json { render :show, status: :ok, location: @post }
       else
-        format.turbo_stream {
+        format.turbo_stream do
           render turbo_stream: turbo_stream.replace(
-            "error_explanation", partial: 'components/errors',
-            locals: { errors: @post.errors })
-        }
-        format.html { render :edit, status: :unprocessable_entity, notice: "Post was not updated." }
+            'error_explanation', partial: 'components/errors',
+                                 locals: { errors: @post.errors }
+          )
+        end
+        format.html { render :edit, status: :unprocessable_entity, notice: 'Post was not updated.' }
         format.json { render json: @post.errors, status: :unprocessable_entity }
       end
     end
-
   end
 
   def destroy
     @post.destroy
 
     respond_to do |format|
-      format.html { redirect_to posts_url, notice: "Post was successfully destroyed." }
+      format.html { redirect_to posts_url, notice: 'Post was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -84,15 +84,13 @@ class PostsController < ApplicationController
 
   def create_or_delete_post_tags(post, tags)
     post.taggables.destroy_all
-    tag_names = tags.strip.split(",")
+    tag_names = tags.strip.split(',')
     tag_names.each do |tag_name|
-      if tag_names.length > 0
-        tag = Tag.find_by(name: tag_name)
-        if tag.nil?
-          tag = Tag.create(name: tag_name, created_by: current_user)
-        end
-        post.tags << tag
-      end
+      next unless tag_names.length > 0
+
+      tag = Tag.find_by(name: tag_name)
+      tag = Tag.create(name: tag_name, created_by: current_user) if tag.nil?
+      post.tags << tag
     end
   end
 

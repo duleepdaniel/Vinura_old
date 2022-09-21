@@ -1,1 +1,1 @@
-json.partial! "quick_tweets/quick_tweet", quick_tweet: @quick_tweet
+json.partial! 'quick_tweets/quick_tweet', quick_tweet: @quick_tweet

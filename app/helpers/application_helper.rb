@@ -1,19 +1,20 @@
 module ApplicationHelper
   include Pagy::Frontend
 
-  def clean_links html
+  def clean_links(html)
     html.html_safe
   end
 
   def dom_id_for_records(*records)
     records.map do |record|
       dom_id(record)
-    end.join "_"
+    end.join '_'
   end
 
-  def purify content
+  def purify(content)
     content = content.strip
-    sanitize(content, tags: %w(strong em p a b h1 h2 h3 h4 h5 h6 ul ol li pre code img blockquote), attributes: %w(href src alt))
+    sanitize(content, tags: %w[strong em p a b h1 h2 h3 h4 h5 h6 ul ol li pre code img blockquote],
+                      attributes: %w[href src alt])
   end
 
   def is_active(controller_name, action_name)

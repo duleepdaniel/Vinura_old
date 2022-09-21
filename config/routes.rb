@@ -9,8 +9,8 @@ Rails.application.routes.draw do
   match 'search' => 'global#search', :via => [:post], :as => 'search_content'
   match 'draft' => 'global#drafts', :via => [:get], :as => 'drafts'
 
-  post '/', :to => "global#index"
-  root "global#index"
+  post '/', to: 'global#index'
+  root 'global#index'
 
   resources :profile do
     collection do
@@ -30,32 +30,32 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :likes, only: [:create, :destroy]
+  resources :likes, only: %i[create destroy]
   resources :tags
   resources :admin
-  resources :bookmark, only: [:create, :destroy, :index]
-  resources :draft, only: [:create, :destroy]
+  resources :bookmark, only: %i[create destroy index]
+  resources :draft, only: %i[create destroy]
 
   resources :posts do
     collection do
-      post :pagy_index, :path => :p
+      post :pagy_index, path: :p
     end
   end
 
   resources :quick_tweets, path: :tweet do
     collection do
-      post :pagy_index, :path => :p
+      post :pagy_index, path: :p
     end
   end
-  resources :comments, only: [:create, :destroy, :update, :show]
+  resources :comments, only: %i[create destroy update show]
 
   devise_for :users,
-             :path => 'accounts',
-             :path_names => {
-               :sign_in => 'login',
-               :sign_up => 'register',
-               :sign_out => 'logout',
-               :password => 'recover-password',
-               :confirmation => 'verification'
+             path: 'accounts',
+             path_names: {
+               sign_in: 'login',
+               sign_up: 'register',
+               sign_out: 'logout',
+               password: 'recover-password',
+               confirmation: 'verification'
              }
 end

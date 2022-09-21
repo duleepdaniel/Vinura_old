@@ -25,16 +25,16 @@ class Comment < ApplicationRecord
   scope :trashed, -> { where.associated(:trash) }
 
   def is_trashed
-    not self.trash.nil?
+    !trash.nil?
   end
 
   def untrash_it
-    self.trash.destroy
+    trash.destroy
   end
 
   def trash_it
-    Trash.create(trashable: self, user: self.user)
-    self.cleanup_notifications
+    Trash.create(trashable: self, user: user)
+    cleanup_notifications
   end
 
   def normalize_friendly_id(string)
@@ -42,27 +42,27 @@ class Comment < ApplicationRecord
   end
 
   def title
-    self.body.truncate(100)
+    body.truncate(100)
   end
 
   def hash_id
-    Digest::SHA1.hexdigest(self.id.to_s)
+    Digest::SHA1.hexdigest(id.to_s)
   end
 
   private
 
   def notify_recipient
-    if self.parent_id.nil?
-      if self.user != commentable.user
+    if parent_id.nil?
+      if user != commentable.user
         CommentNotification.with(comment: self, commentable: commentable).deliver_later(commentable.user)
       end
     else
-      commenter_equals_parent_commenter = self.user == self.parent.user
+      commenter_equals_parent_commenter = user == parent.user
       unless commenter_equals_parent_commenter
-        ReplyNotification.with(comment: self, commentable: commentable).deliver_later(self.parent.user)
+        ReplyNotification.with(comment: self, commentable: commentable).deliver_later(parent.user)
       end
 
-      commenter_equals_with_author = self.user == commentable.user
+      commenter_equals_with_author = user == commentable.user
       unless commenter_equals_with_author
         CommentNotification.with(comment: self, commentable: commentable).deliver_later(commentable.user)
       end
@@ -72,5 +72,4 @@ class Comment < ApplicationRecord
   def cleanup_notifications
     notifications_as_comment.destroy_all
   end
-
 end

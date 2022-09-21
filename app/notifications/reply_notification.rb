@@ -12,8 +12,8 @@ class ReplyNotification < Noticed::Base
     commentable = params[:comment].commentable
     comment = Comment.find(params[:comment][:id])
     user = User.find(comment.user_id)
-    { :partial => 'notification/components/reply',
-      :locals => {
+    { partial: 'notification/components/reply',
+      locals: {
         commentable: commentable,
         comment: comment,
         user: user

@@ -5,15 +5,15 @@ class DraftController < ApplicationController
     respond_to do |format|
       @draft = current_user.drafts.create(draft_params)
       if @draft.save
-        format.turbo_stream {
+        format.turbo_stream do
           render turbo_stream: turbo_stream.replace(
             "#{@draft.draftable.model_name.name}-#{@draft.draftable.id}_draft",
-            partial: "draft/create",
+            partial: 'draft/create',
             locals: { draftable: @draft.draftable }
           )
-        }
+        end
       else
-        format.html { redirect_to @draft.draftable, notice: "Unable to draft." }
+        format.html { redirect_to @draft.draftable, notice: 'Unable to draft.' }
       end
     end
   end
@@ -22,14 +22,14 @@ class DraftController < ApplicationController
     @draft = current_user.drafts.find(params[:id])
     @draft.destroy
     respond_to do |format|
-      format.turbo_stream {
+      format.turbo_stream do
         render turbo_stream: turbo_stream.replace(
           "#{@draft.draftable.model_name.name}-#{@draft.draftable.id}_draft",
-          partial: "draft/create",
+          partial: 'draft/create',
           locals: { draftable: @draft.draftable }
         )
-      }
-      format.html { redirect_to @draft.draftable, notice: "Unable to draft." }
+      end
+      format.html { redirect_to @draft.draftable, notice: 'Unable to draft.' }
     end
   end
 

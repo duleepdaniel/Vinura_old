@@ -1,6 +1,6 @@
 class CommentsController < ApplicationController
   before_action :authenticate_user!, except: [:show]
-  before_action :set_comment, only: %i[ show form ]
+  before_action :set_comment, only: %i[show form]
   authorize_resource
 
   def show
@@ -21,13 +21,13 @@ class CommentsController < ApplicationController
       if comment
         format.turbo_stream
       else
-        format.turbo_stream {
+        format.turbo_stream do
           render turbo_stream: turbo_stream.replace(
-            "comment_error_explanation",
+            'comment_error_explanation',
             partial: 'components/errors',
             locals: { errors: @comment.errors }
           )
-        }
+        end
         format.json { render json: @comment.errors, status: :unprocessable_entity }
       end
     end
@@ -37,12 +37,12 @@ class CommentsController < ApplicationController
     respond_to do |format|
       @comment = current_user.comments.find(params[:id])
       @comment.destroy
-      format.turbo_stream {
+      format.turbo_stream do
         render turbo_stream: turbo_stream.remove(
           "#{@comment.hash_id}"
         )
-      }
-      format.html { redirect_to @comment.commentable, notice: "Comment was successfully destroyed." }
+      end
+      format.html { redirect_to @comment.commentable, notice: 'Comment was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -52,14 +52,14 @@ class CommentsController < ApplicationController
       @comment = current_user.comments.find(params[:id])
       @comment.trash_it
 
-      format.turbo_stream {
+      format.turbo_stream do
         render turbo_stream: turbo_stream.replace(
           "#{@comment.hash_id}",
           partial: 'comments/deleted',
           locals: { hash_id: @comment.hash_id }
         )
-      }
-      format.html { redirect_to @comment.commentable, notice: "Comment was successfully destroyed." }
+      end
+      format.html { redirect_to @comment.commentable, notice: 'Comment was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -67,19 +67,19 @@ class CommentsController < ApplicationController
   def update
     respond_to do |format|
       unless @comment.update(comment_params)
-        format.html { redirect_to commentable_path(@commentable), alert: "Comment was not updated." }
+        format.html { redirect_to commentable_path(@commentable), alert: 'Comment was not updated.' }
       end
     end
   end
 
   private
+
   def set_comment
     # Load post is required for authorization of posts with cancancan
     @comment = Comment.friendly.find(params[:id])
   end
+
   def comment_params
     params.require(:comment).permit(:body, :commentable_id, :commentable_type, :parent_id)
   end
-
-
 end

@@ -12,6 +12,7 @@ RUN apk add --update --no-cache \
 WORKDIR /app
 
 # Install gems
+RUN gem install bundler -v 2.0.1
 ADD Gemfile* /app/
 RUN bundle config --global frozen 1 \
  && bundle install --without development test -j4 --retry 3 \

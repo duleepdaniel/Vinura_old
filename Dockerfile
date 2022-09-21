@@ -15,7 +15,6 @@ WORKDIR /app
 ADD Gemfile* /app/
 RUN bundle config --global frozen 1 \
  && bundle install --without development test -j4 --retry 3 \
- # Remove unneeded files (cached *.gem, *.o, *.c)
  && rm -rf /usr/local/bundle/cache/*.gem \
  && find /usr/local/bundle/gems/ -name "*.c" -delete \
  && find /usr/local/bundle/gems/ -name "*.o" -delete
@@ -39,8 +38,8 @@ RUN rm -rf node_modules tmp/cache app/assets vendor/assets lib/assets spec
 
 # ###############################
 # # Stage Final
-# FROM ruby:2.5.1-alpine
-# LABEL maintainer="mail@georg-ledermann.de"
+FROM ruby:2.5.1-alpine
+LABEL maintainer="mail@duleep.daniel@gmail.com"
 
 # Add Alpine packages
 RUN apk add --update --no-cache \
@@ -48,8 +47,6 @@ RUN apk add --update --no-cache \
     imagemagick \
     tzdata \
     file \
-    # needed for wkhtmltopdf
-    libcrypto1.0 libssl1.0 \
     ttf-dejavu ttf-droid ttf-freefont ttf-liberation ttf-ubuntu-font-family
 
 # Add user

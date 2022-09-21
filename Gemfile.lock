@@ -199,6 +199,8 @@ GEM
       racc (~> 1.4)
     nokogiri (1.13.8-arm64-darwin)
       racc (~> 1.4)
+    nokogiri (1.13.8-x86_64-linux)
+      racc (~> 1.4)
     noticed (1.5.9)
       http (>= 4.0.0)
       rails (>= 5.2.0)
@@ -332,6 +334,7 @@ GEM
       sprockets (>= 3.0.0)
     sqlite3 (1.5.0-aarch64-linux)
     sqlite3 (1.5.0-arm64-darwin)
+    sqlite3 (1.5.0-x86_64-linux)
     sqlite3-ruby (1.3.3)
       sqlite3 (>= 1.3.3)
     stimulus-rails (1.1.0)
@@ -340,6 +343,8 @@ GEM
     tailwindcss-rails (2.0.14-aarch64-linux)
       railties (>= 6.0.0)
     tailwindcss-rails (2.0.14-arm64-darwin)
+      railties (>= 6.0.0)
+    tailwindcss-rails (2.0.14-x86_64-linux)
       railties (>= 6.0.0)
     temple (0.8.2)
     thin (1.6.2)
@@ -381,6 +386,7 @@ GEM
 PLATFORMS
   aarch64-linux-musl
   arm64-darwin-20
+  x86_64-linux-musl
 
 DEPENDENCIES
   bootsnap

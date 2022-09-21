@@ -1,20 +1,75 @@
-FROM ruby:2.7.0-alpine
+FROM ruby:2.5.1-alpine as Builder
 
-RUN apk add --update --no-cache build-base imagemagick6 imagemagick6-c++ \
-    imagemagick6-dev imagemagick6-libs \
-    postgresql-client postgresql-dev \
+RUN apk add --update --no-cache \
+    build-base \
+    postgresql-dev \
+    git \
+    imagemagick \
+    nodejs-current \
+    yarn \
     tzdata
 
 WORKDIR /app
 
-COPY . /app/
+# Install gems
+ADD Gemfile* /app/
+RUN bundle config --global frozen 1 \
+ && bundle install --without development test -j4 --retry 3 \
+ # Remove unneeded files (cached *.gem, *.o, *.c)
+ && rm -rf /usr/local/bundle/cache/*.gem \
+ && find /usr/local/bundle/gems/ -name "*.c" -delete \
+ && find /usr/local/bundle/gems/ -name "*.o" -delete
 
-ENV BUNDLE_PATH /gems
+# Install yarn packages
+COPY package.json yarn.lock /app/
+RUN yarn install
 
-#RUN yarn install
-RUN bundle install
+# Add the Rails app
+ADD . /app
 
-ENTRYPOINT ["bundle", "exec", "rails"]
-CMD ["server", "--binding", "0.0.0.0", "--port", "3000"]
+# Precompile assets
+RUN RAILS_ENV=production SECRET_KEY_BASE=foo bundle exec rake assets:precompile
 
+# Remove folders not needed in resulting image
+RUN rm -rf node_modules tmp/cache app/assets vendor/assets lib/assets spec
+
+# ###############################
+# # Stage wkhtmltopdf
+# FROM madnight/docker-alpine-wkhtmltopdf as wkhtmltopdf
+
+# ###############################
+# # Stage Final
+# FROM ruby:2.5.1-alpine
+# LABEL maintainer="mail@georg-ledermann.de"
+
+# Add Alpine packages
+RUN apk add --update --no-cache \
+    postgresql-client \
+    imagemagick \
+    tzdata \
+    file \
+    # needed for wkhtmltopdf
+    libcrypto1.0 libssl1.0 \
+    ttf-dejavu ttf-droid ttf-freefont ttf-liberation ttf-ubuntu-font-family
+
+# Add user
+RUN addgroup -g 1000 -S app \
+ && adduser -u 1000 -S app -G app
+USER app
+
+# Copy app with gems from former build stage
+COPY --from=Builder /usr/local/bundle/ /usr/local/bundle/
+COPY --from=Builder --chown=app:app /app /app
+
+# Set Rails env
+
+WORKDIR /app
+
+# Expose Puma port
 EXPOSE 3000
+
+# Save timestamp of image building
+RUN date -u > BUILD_TIME
+
+# Start up
+ENTRYPOINT ["docker/startup.sh"]

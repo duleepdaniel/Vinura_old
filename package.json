@@ -1,0 +1,11 @@
+{
+  "name": "vinura",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:duleepdaniel/Vinura.git",
+  "author": "Duleep <duleep.daniel@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@rails/webpacker": "^5.4.3"
+  }
+}

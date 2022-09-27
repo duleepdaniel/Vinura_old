@@ -44,9 +44,9 @@ class Post < ApplicationRecord
 
   default_scope { order(created_at: :desc) }
 
-  after_save_commit lambda {
-    generate_og_image if body.present? and previous_changes.has_key?(:body)
-  }
+  # after_save_commit lambda {
+  #   generate_og_image if body.present? and previous_changes.has_key?(:body)
+  # }
 
   def pure_text
     Nokogiri::HTML(body).xpath('//text()').map(&:text).join('')
@@ -68,9 +68,9 @@ class Post < ApplicationRecord
   end
 
   def similiar_posts
-    Post.joins(:tags) # You need to query the Post table
-        .where.not(posts: { id: id }) # Exclude this post
-        .where(tags: { id: tags.ids }) # Get similar tags
+    Post.joins(:tags)
+        .where.not(posts: { id: id })
+        .where(tags: { id: tags.ids })
         .or(Post.where(user: user))
         .group(:id)
   end

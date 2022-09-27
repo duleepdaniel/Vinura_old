@@ -43,10 +43,8 @@
     </button>
   <% end %>
 
-  <%= form.hidden_field field, data: { tiptap_target: "textbox" } %>
-  <%= content_tag :div, '', data: { tiptap_target: "content" }, class: '' do %>
-    <textarea class="ProseMirror"></textarea>
-  <% end %>
+  
+  <%= form.text_field field, data: { controller: "textbox", tiptap_target: "content" }, placeholder: 'Story....', class: "ProseMirror" %>
 
   <%= content_tag :div, class: "editor-controls rounded p-2 sticky bottom-2" do %>
     <button type="button" data-action="click->tiptap#codeText" data-tiptap-target="code" class="group edit-btn">

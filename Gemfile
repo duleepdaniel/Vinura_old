@@ -62,6 +62,7 @@ end
 group :development do
   gem 'debug'
   gem 'web-console'
+  gem 'pry', '~> 0.13.1'
 end
 
 group :production do

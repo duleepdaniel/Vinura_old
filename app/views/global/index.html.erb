@@ -13,8 +13,6 @@
         <%= button_to "Load More", pagy_url_for(@pagy, @pagy.next), class:"view-btn w-full dark:hover:bg-black/50" %>
       </div>
     </div>
-
-    <%= render "components/credits_footer" %>
   </main>
 
   <%= content_for :right_aside_bar do %>

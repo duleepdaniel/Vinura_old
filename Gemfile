@@ -50,6 +50,7 @@ gem 'image_processing', '~> 1.2'
 
 # Custom Gems
 gem 'rubocop', require: false
+gem 'quilljs-rails', '~> 0.0.4'
 
 group :development, :test do
   gem 'debug', platforms: %i[mri mingw x64_mingw]

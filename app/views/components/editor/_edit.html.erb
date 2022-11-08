@@ -45,6 +45,7 @@
 
   
   <%= form.text_field field, data: { controller: "textbox", tiptap_target: "content" }, placeholder: 'Story....', class: "ProseMirror" %>
+  <%= form.text_field field, label: 'Title', placeholder: 'Start Typing your story', type: 'text', class: 'quill_container', style: "height: 30rem; width: 100%;" %>
 
   <%= content_tag :div, class: "editor-controls rounded p-2 sticky bottom-2" do %>
     <button type="button" data-action="click->tiptap#codeText" data-tiptap-target="code" class="group edit-btn">
